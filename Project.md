@@ -322,7 +322,7 @@ The script for KING is as follows:
 #
 #SBATCH -J king
 #SBATCH -t 12:00:00
-#SBATCH -A uppmax2022-2-21
+#SBATCH -A uppmax20XX-XX-XX
 #SBATCH -n 8
 king -b $1  --unrelated
 ```
@@ -330,7 +330,7 @@ You can submit it as a job by doing:
 ```
 sbatch -M snowy THIS_SCRIPT.sh YOUR_DATASET5.bed
 ```
-Look at the output from KING & keep the unrelated individuals.
+Look at the output from KING & **keep** the unrelated individuals.
 
 Checkpoint *At this point, when you exclude the related individuals you should be at YOUR_DATASET_6*
 
