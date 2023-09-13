@@ -406,9 +406,11 @@ You can read up on how to prune for LD(https://dalexander.github.io/admixture/ad
 
 ```
 plink --bfile FINAL_DATASET --indep-pairwise 10 10 0.1
+```
+this creates some output files. Check what they contain.
 
+```
 plink --bfile FINAL_DATASET --extract plink.prune.in --make-bed --out FINAL_DATASET_PRUNED
-
 ```
 Check how much you're pruning out. Perhaps you can tweak the parameters if you are pruning out too much! 
 
