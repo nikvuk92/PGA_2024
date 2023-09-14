@@ -248,11 +248,9 @@ ls -lh *
 Plink can convert to other file formats as well, you can have a look in the manual for the different types of conversions
 
 # PART 1: Merging, Filtering, QC steps
-
-## Step 1 Filtering for missing data
-You need to do all of the following steps for each of the three reference datasets separately.
 *Remember, you are only filtering the modern reference dataset*
 
+## Step 1 Filtering for missing data
 First, we filter for marker missingness:
 
 *YOUR_DATASET refers (below) to the MODERN_REFERENCE_DATASET*
@@ -278,7 +276,6 @@ Look at the screen output, how many individuals were excluded?
 ## Step 3 MAF filtering
 
 To filter for minimum allele frequency is not always optimal, especially if you are going to merge your data with other datasets in which the alleles might be present. But we will apply a MAF filter in this case
-(remember not to filter the 'Unknown' samples)
 
 Filter data for a minimum allele frequency of 1% by pasting in:
 
@@ -335,16 +332,19 @@ Look at the output from KING & **keep** the unrelated individuals.
 Checkpoint *At this point, when you exclude the related individuals you should be at YOUR_DATASET_6*
 
 ## Step 6 Make the modern dataset haploid 
-"Pseudohaploidizing" a TPED file typically involves converting a diploid genotype data file into a pseudohaploid format, where each variant or SNP (Single Nucleotide Polymorphism) is represented only once, as if the genotype data came from a haploid individual. This is mainly employed when working with low coverage (aDNA) where we know that we probably don't have both alleles for throughout the genome of interest. The script that we are using selects one allele for each SNP marker for each individual. There are multiple ways for the allele selection process but it must be consistent across the dataset. 
-you can run it on the modern dataset (in an interactive node) like this:
+"Pseudohaploidizing" a TPED file typically involves converting a diploid genotype data file into a pseudohaploid format, where each variant or SNP (Single Nucleotide Polymorphism) is represented only once, as if the genotype data came from a haploid individual. This is mainly employed when working with ancient DNA. The script that we are using selects one allele for each SNP marker for each individual. There are multiple ways for the allele selection process but it must be consistent across the dataset. Can you think about why this is a good idea to do when dealing with ancient DNA? 
+
+you can run the script on the modern dataset (in an interactive node) like this:
 ```
 haploidize_tped.py < YOURDATASET.tped > YOURDATASET_haploid.tped
 ```
-it will take some time to run. After it is done, the file YOURDATASET_haploid.tped is the haploid version of YOURDATASET.tped. Therefore you can either rename YOURDATASET.tped into something different (or if you are certain, just delete it) and rename the haploid version to just YOURDATASET.tped. This way, all the files that accompanied the original tped will work for your "new" version.## Step 7
+It will take some time to run because it goes through each SNP position in your file. After it is done, the file YOURDATASET_haploid.tped is the haploid version of YOURDATASET.tped. Therefore you can either rename YOURDATASET.tped into something different (or if you are certain, just delete it) and rename the haploid version to just YOURDATASET.tped. This way, all the files that accompanied the original tped will work for your "new" version.
+
 P.S. There is no need to make the ancient reference dataset pseudohaploid because we have already made sure that it is for you.
 
 ## Step 7 Plot a PCA using the Modern reference individuals
 Plot a PCA using plink on the Modern reference individuals and describe what you see.
+
 ```plink --bfile YOUR_DATASET5 --pca```
 
 This should give you an eigenvec and an eigenval file as outputs. Plot them in R and include in your report. Also plot the different PCs (as barplots) to show how much of the variation each one explains.
@@ -356,7 +356,10 @@ When merging datasets from different chips, the same position can have different
 In order to run rename_SNP.py first load ```module load python/2.7.11``` (Issues might occur if not using the right version of Python).
 
 ```python rename_SNP.py FILE.bim```
-After which you should get that the output with replaced SNP names has been written to FILE.bim_pos_names. You can delete the original bim (or rename it if you're feeling unsure) & edit the ```FILE.bim_pos_names``` to be ```FILE.bim```.
+
+After which you should get that the output with replaced SNP names has been written to FILE.bim_pos_names. You can delete the original bim (or rename it if you're feeling unsure) & edit the 
+
+```FILE.bim_pos_names``` to be ```FILE.bim```.
 
 Check to see what happened after the script did its job.
 
