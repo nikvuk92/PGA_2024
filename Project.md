@@ -363,29 +363,27 @@ Now check what the bim files look like after the changes.
 Merging is done using plink's bmerge command:
 ```plink --bmerge FILE_A --bfile FILE_B --out FILEA+B```
 
-Check the missingness again at this point and report it in your findings. How did it change ? Why do you think this is?
-
-*Checkpoint* - You can name this dataset ```ALL_REFERENCE_DATASETS``` so that it's easier to follow.
-
 ### Step 9 Merge the Unknown dataset to the reference-combined-dataset
 Finally, after you've merged the two reference datasets together, we need to merge in the Unknowns as well. To do this, as previously, 
-Again did the missigness change in any way? 
-*Checkpoint* - You can name this dataset ```ALL_COMBINED_DATASETS``` so that it's easier to follow.
+Again did the missigness change in any way? Let's call this one ```COMPLETE_DATASET```.
+
+### Filter missing genotypes 
+``` --geno ``` filters out all variants with missing call rates exceeding some provided value. Using a value like the one below is a quick way of making our dataset lighter.
+```
+plink --bfile COMPLETE_DATASET --geno 0.99 --make-bed --out COMPLETE_DATASET_GENO 
+```
+Think about why the bulk of the filtering was done on the modern dataset and why we are very cautious now. 
 
 These are the final files for the next exercise. Rename them:
 ```
-mv FINAL_DATASET.bed PopStrucIn1.bed; mv FINAL_DATASET.bim PopStrucIn1.bim; mv FINAL_DATASET.fam PopStrucIn1.fam 
+mv COMPLETE_DATASET_GENO.bed PopStrucIn1.bed; mv COMPLETE_DATASET_GENO.bim PopStrucIn1.bim; mv COMPLETE_DATASET_GENO.fam PopStrucIn1.fam 
 ```
-## Geno 0.90
-
-Think about why the bulk of the filtering was done on the modern dataset and why we aren't doing it now. Do you think that is a good strategy or would you try anything else as well?
-
 ## Step 10 Remove all unnecessary iterations of the same data except .log files from the merging/filtering steps and of course the final dataset
 As our storage on uppmax is quite limited, this is a good point to free up your space from all the data that was produced from each of the previous steps and just keep the final dataset.  
 Feels stupid to say, but please do not delete the files you need downstream.
 
 ## Step 11 Reflect and review
-How many SNPs are you working with?  
+How many SNPs are you working with? Make sure you report how the genotype rates, SNP counts and other important parameteres changed based on your filter strategy.
 Now you have generated your input files for the next exercise which will deal with population structure analysis on the combined dataset. You will look at the population structure of your unknown samples in comparison to known known reference populations (such as Human Origins).
 
 =============================================================================
