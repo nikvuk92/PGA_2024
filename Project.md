@@ -333,14 +333,14 @@ Look at file hardy_YOUR_DATASET_4.hwe !
 
 P.S. There is no need to make the ancient reference dataset pseudohaploid because we have already made sure that it is for you.
 
-## Step 7 Plot a PCA using the Modern reference individuals
+## Step 6 Plot a PCA using the Modern reference individuals
 Plot a PCA using plink on the Modern reference individuals and describe what you see.
 
 ```plink --bfile YOUR_DATASET_4 --pca```
 
 This should give you an eigenvec and an eigenval file as outputs. Plot them in R and include this PCA in your report. Also plot the different PCs (as barplots) to show how much of the variation each one explains. Try to describe what each PC represents (up to some reasonable PC ex.PC5).
 
-## Step 8 Before merging let's first unify SNP names 
+## Step 7 Before merging let's first unify SNP names 
 When merging datasets from different chips, the same position can have different names on different chips. The rename_SNP.py script can be used on the .bim files to change the SNP name into the names based on position. Do this for both reference datasets and your unknown dataset. Check the bim files prior to making the change and see the SNP names before they get renamed.
 
 In order to run rename_SNP.py first load ```module load python/2.7.11``` (Issues might occur if not using the right version of Python).
@@ -353,7 +353,7 @@ After which you should get that the output with replaced SNP names has been writ
 
 Now check what the bim files look like after the changes.
 
-### Step 9 Merging the reference datasets to eachother
+### Step 8 Merging the reference datasets to eachother
 
 *P.S. As long as you have all the files/datasets in the same directory you don't need to specify the full paths. If they are in different datasets, remember to add the full path to the file, such as:
 ```/proj/uppmaxproject/full_path_to_YOUR_OWN_directory/Reference_datasets/datasetA/file```
@@ -367,7 +367,7 @@ Check the missingness again at this point and report it in your findings. How di
 
 *Checkpoint* - You can name this dataset ```ALL_REFERENCE_DATASETS``` so that it's easier to follow.
 
-### Step 10 Merge the Unknown dataset to the reference-combined-dataset
+### Step 9 Merge the Unknown dataset to the reference-combined-dataset
 Finally, after you've merged the two reference datasets together, we need to merge in the Unknowns as well. To do this, as previously, 
 Again did the missigness change in any way? 
 *Checkpoint* - You can name this dataset ```ALL_COMBINED_DATASETS``` so that it's easier to follow.
@@ -378,11 +378,11 @@ mv FINAL_DATASET.bed PopStrucIn1.bed; mv FINAL_DATASET.bim PopStrucIn1.bim; mv F
 ```
 Think about why the bulk of the filtering was done on the modern dataset and why we aren't doing it now. Do you think that is a good strategy or would you try anything else as well?
 
-## Step 11 Remove all unnecessary iterations of the same data except .log files from the merging/filtering steps and of course the final dataset
+## Step 10 Remove all unnecessary iterations of the same data except .log files from the merging/filtering steps and of course the final dataset
 As our storage on uppmax is quite limited, this is a good point to free up your space from all the data that was produced from each of the previous steps and just keep the final dataset.  
 Feels stupid to say, but please do not delete the files you need downstream.
 
-## Step 12 Reflect and review
+## Step 11 Reflect and review
 How many SNPs are you working with?  
 Now you have generated your input files for the next exercise which will deal with population structure analysis on the combined dataset. You will look at the population structure of your unknown samples in comparison to known known reference populations (such as Human Origins).
 
