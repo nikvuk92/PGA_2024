@@ -435,9 +435,9 @@ Whatever you end up choosing, the important thing is that:
 - All the "UNK" samples go in the UNKNOWN_SAMPLES.txt
 - All the ancient samples that came from the ANCIENT_REFERENCE_DATASET.fam also go into the UNKNOWN_SAMPLES.txt
 - All the modern samples from MODERN_REFERENCE_DATASET.fam go into the MODERN_SAMPLES.txt
-*It is crucial that there are no duplicate entries in the both of these population files!*
 
-*Note Populations IDs in "MODERN_REFERENCE_DATASET" and "UNKNOWN_SAMPLES" must exactly match the IDs in the tfam.
+**It is crucial that there are no duplicate entries in the both of these population files!**
+*Note Populations IDs in "MODERN_REFERENCE_DATASET" and "UNKNOWN_SAMPLES" must exactly match the IDs in the tfam.*
 
 Hint: Check the ```pca_lsqpeoj.sh``` file if it is calling the following modules:
 
