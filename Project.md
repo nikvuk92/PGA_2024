@@ -561,10 +561,10 @@ First, you have to load the module:
 module load bioinfo-tools
 module load ADMIXTURE/1.3.0
 ```
-A basic ADMIXTURE run looks like this:
+A basic ADMIXTURE run would look like this (do not run this):
 
 ```
-admixture -s time FINAL_DATASET_PRUNED.bed 2
+admixture -s time EXAMPLE.bed 2
 ```
 
 This command executes the program with a seed set from system clock time, it gives the input file (remember the extension) and the K value at which to run ADMIXTURE (2 in the previous command).
@@ -584,7 +584,7 @@ for kval in {2..6}; do
 #working folder where admixture and the bed files are
 module load bioinfo-tools
 module load ADMIXTURE/1.3.0
-admixture -j3 -s $RANDOM path/to/your/FINAL_DATASET_PRUNED.bed ${kval}
+admixture -j3 -s $RANDOM /the/path/to/your/FINAL_DATASET_PRUNED.bed ${kval}
 cd ../
 rm -r ${kval}.${int}
 #moves it to a different folder and renames it so you end up with multiple iterations
