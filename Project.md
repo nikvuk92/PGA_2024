@@ -248,7 +248,8 @@ ls -lh *
 Plink can convert to other file formats as well, you can have a look in the manual for the different types of conversions
 
 # PART 1: Merging, Filtering, QC steps
-*Remember, you are only filtering the modern reference dataset*
+*Remember, you are only filtering the modern reference dataset* 
+The filtering values below are just stand in values. They might be good picks or there might be better ones. Whatever you choose in the end try to rationalize your choices.
 
 ## Step 1 Filtering for missing data
 First, we filter for marker missingness:
