@@ -286,32 +286,11 @@ Filter data for a minimum allele frequency of 1% by pasting in:
 ```
 plink --bfile YOUR_DATASET3 --maf 0.01 --make-bed --out YOUR_DATASET4 
 ```
-
-How many SNPs are left at this point?
-
-## Step 4 Filtering for SNPs out of Hardy-Weinberg equilibrium
-
-Most likely, SNPs out of HWE usually indicates problems with the genotyping. However, to avoid filtering out SNPs that are selected for/against in certain groups (especially when working with case/control data) filtering HWE per group is recommended. After, only exclude the common SNPs that fall out of the HWE in the different groups - (OPTIONAL). But for reasons of time, we will now just filter the entire dataset for SNPs that aren’t in HWE with a significance value of 0.001
-
-```
-plink --bfile YOUR_DATASET4 --hwe 0.001 --make-bed --out YOUR_DATASET5
-```
-
-Look at the screen. How many SNPs were excluded?
-
-If you only what to look at the HWE stats you can do as follows. By doing this command you can also obtain the observed and expected heterozygosities. 
-
-```
-plink --bfile YOUR_DATASET5 --hardy --out hardy_YOUR_DATASET5
-```
-Look at file hardy_YOUR_DATASET5.hwe, see if you understand the output?
-
-There are additional filtering steps that you can go further. PLINK site on the side lists all the cool commands that you can use to treat your data. Usually, we also filter for related individuals and do a sex-check on the X-chromosome to check for sample mix-ups. 
-
-## Step 5 Filtering out related individuals (just the Modern Reference dataset)
+## Step 4 Filtering out related individuals (just the Modern Reference dataset)
 
 In the `SCRIPTS` folder, there is a script called `sbatch_KING.sh` that can be used to run [KING](http://people.virginia.edu/~wc9c/KING/manual.html) You can have a look inside for instructions on how to run the script. Check out the manual and try and figure out how the software works.
-After you have run the script have a look at the produced output files and figure out how to remove the related individuals. (*Hint - keep via Plink might be a good option) 
+After you have run the script have a look at the produced output files and figure out how to remove the related individuals, if there are any
+
 *P.S. You don't need to do run KING for the Unknown dataset.*
 
 First load ```bioinfo-tools``` and then ```module load KING```.
@@ -330,33 +309,39 @@ king -b $1  --unrelated
 ```
 You can submit it as a job by doing:
 ```
-sbatch -M snowy THIS_SCRIPT.sh YOUR_DATASET5.bed
+sbatch -M snowy THIS_SCRIPT.sh YOUR_DATASET4.bed
 ```
 Look at the output from KING & **keep** the unrelated individuals.
 
-Checkpoint *At this point, when you exclude the related individuals you should be at YOUR_DATASET_6*
+Checkpoint *At this point, if you exclude any related individuals you should be at YOUR_DATASET_5, otherwise go on with YOUR_DATASET_4*
 
-## Step 6 Make the modern dataset haploid 
+## Step 5 Make the modern dataset haploid 
 "Pseudohaploidizing" a TPED file typically involves converting a diploid genotype data file into a pseudohaploid format, where each variant or SNP (Single Nucleotide Polymorphism) is represented only once, as if the genotype data came from a haploid individual. This is mainly employed when working with ancient DNA. The script that we are using selects one allele for each SNP marker for each individual. There are multiple ways for the allele selection process but it must be consistent across the dataset. Can you think about why this is a good idea to do when dealing with ancient DNA? 
 
 you can run the script on the modern dataset (in an interactive node) like this:
 ```
-haploidize_tped.py < YOURDATASET.tped > YOURDATASET_haploid.tped
+haploidize_tped.py < YOUR_DATASET_4.tped > YOUR_DATASET_4_haploid.tped
 ```
-It will take some time to run because it goes through each SNP position in your file. After it is done, the file YOURDATASET_haploid.tped is the haploid version of YOURDATASET.tped. Therefore you can either rename YOURDATASET.tped into something different (or if you are certain, just delete it) and rename the haploid version to just YOURDATASET.tped. This way, all the files that accompanied the original tped will work for your "new" version.
+It will take some time to run because it goes through each SNP position in your file. After it is done, the file YOUR_DATASET_4_haploid.tped is the haploid version of YOUR_DATASET_4.tped. Therefore you can either rename YOUR_DATASET_4.tped into something different (or if you are certain, just delete it) and rename the haploid version to just YOUR_DATASET_4.tped. This way, all the files that accompanied the original tped will work for your "new" version.
+
+Now that you have made sure you have a haploid dataset, if you are curious you can obtain the observed and expected heterozygosities and look at the HWE stats by using this command 
+
+```
+plink --bfile YOUR_DATASET_4 --hardy --out hardy_YOUR_DATASET_4
+```
+Look at file hardy_YOUR_DATASET_4.hwe !
 
 P.S. There is no need to make the ancient reference dataset pseudohaploid because we have already made sure that it is for you.
 
 ## Step 7 Plot a PCA using the Modern reference individuals
 Plot a PCA using plink on the Modern reference individuals and describe what you see.
 
-```plink --bfile YOUR_DATASET5 --pca```
+```plink --bfile YOUR_DATASET_4 --pca```
 
-This should give you an eigenvec and an eigenval file as outputs. Plot them in R and include in your report. Also plot the different PCs (as barplots) to show how much of the variation each one explains.
-Try to describe what each PC represents.
+This should give you an eigenvec and an eigenval file as outputs. Plot them in R and include this PCA in your report. Also plot the different PCs (as barplots) to show how much of the variation each one explains. Try to describe what each PC represents (up to some reasonable PC ex.PC5).
 
 ## Step 8 Before merging let's first unify SNP names 
-When merging datasets from different chips, the same position can have different names on different chips. The rename_SNP.py script can be used on the .bim files to change the SNP name into the names based on position. Luckily for you, this has already been done for the three reference datasets. Otherwise there would have been just the additional step of renaming the SNPs for each dataset prior to merging. But since we don't know where the Unknown dataset came from, we want to conduct this step for it. Check the bim file for the Unknown dataset and see the SNP names before you rename them.
+When merging datasets from different chips, the same position can have different names on different chips. The rename_SNP.py script can be used on the .bim files to change the SNP name into the names based on position. Do this for both reference datasets and your unknown dataset. Check the bim files prior to making the change and see the SNP names before they get renamed.
 
 In order to run rename_SNP.py first load ```module load python/2.7.11``` (Issues might occur if not using the right version of Python).
 
@@ -364,9 +349,9 @@ In order to run rename_SNP.py first load ```module load python/2.7.11``` (Issues
 
 After which you should get that the output with replaced SNP names has been written to FILE.bim_pos_names. You can delete the original bim (or rename it if you're feeling unsure) & edit the 
 
-```FILE.bim_pos_names``` to be ```FILE.bim```.
+```FILE.bim_pos_names``` to become ```FILE.bim```.
 
-Check to see what happened after the script did its job.
+Now check what the bim files look like after the changes.
 
 ### Step 9 Merging the reference datasets to eachother
 
@@ -391,6 +376,8 @@ These are the final files for the next exercise. Rename them:
 ```
 mv FINAL_DATASET.bed PopStrucIn1.bed; mv FINAL_DATASET.bim PopStrucIn1.bim; mv FINAL_DATASET.fam PopStrucIn1.fam 
 ```
+Think about why the bulk of the filtering was done on the modern dataset and why we aren't doing it now. Do you think that is a good strategy or would you try anything else as well?
+
 ## Step 11 Remove all unnecessary iterations of the same data except .log files from the merging/filtering steps and of course the final dataset
 As our storage on uppmax is quite limited, this is a good point to free up your space from all the data that was produced from each of the previous steps and just keep the final dataset.  
 Feels stupid to say, but please do not delete the files you need downstream.
@@ -413,7 +400,7 @@ Before running PCA & ADMIXTURE it is advisable to prune the data to thin the mar
 You can read up on how to prune for LD(https://dalexander.github.io/admixture/admixture-manual.pdf).
 
 ```
-plink --bfile FINAL_DATASET --indep-pairwise 10 10 0.1
+plink --bfile FINAL_DATASET --indep-pairwise 10 10 0.5
 ```
 
 
@@ -438,13 +425,19 @@ For running a projected PCA, you first need to produce some files:
 
 To produce the tped, you can use plink as you've done so far. 
 
-And to produce the two population lists:
+And to produce the two population lists you can use a combination of awk, grep, sed, sort, uniq or whatever combination of those you choose.
+Ex.
+```
+awk {'print $1'} file.tfam |sort|uniq > Sorted_list_of_the_populations.txt
+```
+Then, this sorted list of populations, you can subset to an ```unknown.txt``` and a ```modern.txt``` using any approach you like.  But I suggest looking at the fam/tfam file to think of a smart way to do this in one quick step. (Look at the patterns you might grep on!)
 
-```
-awk {'print $1'} FINAL_DATASET.tfam |sort|uniq > Sorted_list_of_the_populations.txt
-```
-Then, this sorted list of populations, you can subset to an ```unknown.txt``` and a ```modern.txt``` using any approach you like.
-*Note Populations IDs in "modern reference pops" must exactly match the IDs in the tfam, while population IDs in "unkown pops to include" can be more general (e.g. HG_SE instead of HG_SE_SF12) - No error messages when this is violated but weird results may occur!
+Whatever you end up choosing, the important thing is that:
+- All the "UNK" samples go in the UNKNOWN_SAMPLES.txt
+- All the ancient samples that came from the ANCIENT_REFERENCE_DATASET.fam also go into the UNKNOWN_SAMPLES.txt
+- All the modern samples from MODERN_REFERENCE_DATASET.fam go into the MODERN_SAMPLES.txt
+
+*Note Populations IDs in "MODERN_REFERENCE_DATASET" and "UNKNOWN_SAMPLES" must exactly match the IDs in the tfam.
 
 Hint: Check the ```pca_lsqpeoj.sh``` file if it is calling the following modules:
 
@@ -460,7 +453,7 @@ Now make a ```tped``` version of the dataset and you can go ahead & submit a sba
 ```
 sbatch -A correctUPPMAXproject -M snowy -p core -n 2 -t 07:00:00 -J PCA_lsq -e LSQ.er pca_lsqproj.sh FINAL_DATASET_PRUNED_TPED MODERN_SAMPLES.txt UNKNOWN_SAMPLES.txt
 ```
-This should take a few hours. You can check whether the job is still running with ```jobinfo```.
+This may take a few hours. You can check whether the job is still running with ```jobinfo```.
 
 ```jobinfo -M snowy -u YOUR_USERNAME```
 
@@ -474,9 +467,9 @@ library(ggplot2)
 pca<-read.table("FINAL_DATASET_PRUNED_TPED.popsubset.evec")
 ####### DIVIDE THE TABLE INTO MODERN & UNKNOWN - make sure to edit the right numbers! 
 
-modern<-pca[c(1:1610),]
+modern<-pca[c(155:1610),]
 modern$V12<-factor(modern$V12)
-ancient<-pca[c(1611:1626),]
+ancient<-pca[c(1:155),]
 
 ###### PLOTTING THE MODERN SAMPLES
 par(mfrow=c(1,1))
