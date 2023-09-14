@@ -250,7 +250,9 @@ Plink can convert to other file formats as well, you can have a look in the manu
 # PART 1: Merging, Filtering, QC steps
 *Remember, you are only filtering the modern reference dataset* 
 
-The filtering values below are just stand in values. They might be good picks or there might be better ones. Whatever you choose in the end try to rationalize your choices and report after each step, how many SNPs you had before and after each step, what the genotyping rates looked like, if individuals were removed or not etc.
+*The filtering values below are just stand in values. They might be good picks or there might be better ones.*
+
+Whatever you choose in the end try to rationalize your choices and report after each step, how many SNPs you had before and after each step, what the genotyping rates looked like, if individuals were removed or not etc.
 
 ## Step 1 Filtering for missing data
 First, we filter for marker missingness:
