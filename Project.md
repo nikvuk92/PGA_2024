@@ -376,6 +376,8 @@ These are the final files for the next exercise. Rename them:
 ```
 mv FINAL_DATASET.bed PopStrucIn1.bed; mv FINAL_DATASET.bim PopStrucIn1.bim; mv FINAL_DATASET.fam PopStrucIn1.fam 
 ```
+## Geno 0.90
+
 Think about why the bulk of the filtering was done on the modern dataset and why we aren't doing it now. Do you think that is a good strategy or would you try anything else as well?
 
 ## Step 10 Remove all unnecessary iterations of the same data except .log files from the merging/filtering steps and of course the final dataset
@@ -422,13 +424,12 @@ For running a projected PCA, you first need to produce some files:
   - a tped file (your final merged dataset); 
   - a list of the modern populations in the dataset;
   - a list of the unknown populations in the dataset;
-
 To produce the tped, you can use plink as you've done so far. 
 
 And to produce the two population lists you can use a combination of awk, grep, sed, sort, uniq or whatever combination of those you choose.
 Ex.
 ```
-awk {'print $1'} file.tfam |sort|uniq > Sorted_list_of_the_populations.txt
+awk {'print $2'} file.tfam |sort|uniq > Sorted_list_of_the_populations.txt
 ```
 Then, this sorted list of populations, you can subset to an ```unknown.txt``` and a ```modern.txt``` using any approach you like.  But I suggest looking at the fam/tfam file to think of a smart way to do this in one quick step. (Look at the patterns you might grep on!)
 
@@ -436,6 +437,7 @@ Whatever you end up choosing, the important thing is that:
 - All the "UNK" samples go in the UNKNOWN_SAMPLES.txt
 - All the ancient samples that came from the ANCIENT_REFERENCE_DATASET.fam also go into the UNKNOWN_SAMPLES.txt
 - All the modern samples from MODERN_REFERENCE_DATASET.fam go into the MODERN_SAMPLES.txt
+*It is crucial that there are no duplicate entries in the both of these population files!*
 
 *Note Populations IDs in "MODERN_REFERENCE_DATASET" and "UNKNOWN_SAMPLES" must exactly match the IDs in the tfam.
 
