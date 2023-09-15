@@ -376,10 +376,6 @@ plink --bfile COMPLETE_DATASET --geno 0.90 --make-bed --out COMPLETE_DATASET_GEN
 ```
 Think about why the bulk of the filtering was done on the modern dataset and why we are very cautious now. 
 
-These are the final files for the next exercise. Rename them:
-```
-mv COMPLETE_DATASET_GENO.bed PopStrucIn1.bed; mv COMPLETE_DATASET_GENO.bim PopStrucIn1.bim; mv COMPLETE_DATASET_GENO.fam PopStrucIn1.fam 
-```
 ## Step 10 Remove all unnecessary iterations of the same data except .log files from the merging/filtering steps and of course the final dataset
 As our storage on uppmax is quite limited, this is a good point to free up your space from all the data that was produced from each of the previous steps and just keep the final dataset.  
 Feels stupid to say, but please do not delete the files you need downstream.
@@ -402,7 +398,7 @@ Before running PCA & ADMIXTURE it is advisable to prune the data to thin the mar
 You can read up on how to prune for LD(https://dalexander.github.io/admixture/admixture-manual.pdf).
 
 ```
-plink --bfile FINAL_DATASET --indep-pairwise 10 10 0.5
+plink --bfile COMPLETE_DATASET_GENO --indep-pairwise 10 10 0.5
 ```
 
 
@@ -410,7 +406,7 @@ this creates some output files. Check what they contain.
 
 
 ```
-plink --bfile FINAL_DATASET --extract plink.prune.in --make-bed --out FINAL_DATASET_PRUNED
+plink --bfile COMPLETE_DATASET_GENO --extract plink.prune.in --make-bed --out FINAL_DATASET
 ```
 Check how much you're pruning out. Perhaps you can tweak the parameters if you are pruning out too much! 
 
@@ -429,7 +425,7 @@ To produce the tped, you can use plink as you've done so far.
 And to produce the two population lists you can use a combination of awk, grep, sed, sort, uniq or whatever combination of those you choose.
 Ex.
 ```
-awk {'print $2'} file.tfam |sort|uniq > Sorted_list_of_the_populations.txt
+awk {'print $2'} FINAL_DATASET.tfam |sort|uniq > Sorted_list_of_the_populations.txt
 ```
 Then, this sorted list of populations, you can subset to an ```unknown.txt``` and a ```modern.txt``` using any approach you like.  But I suggest looking at the fam/tfam file to think of a smart way to do this in one quick step. (Look at the patterns you might grep on!)
 
@@ -441,7 +437,7 @@ Whatever you end up choosing, the important thing is that:
 **It is crucial that there are no duplicate entries in the both of these population files!**
 *Note Populations IDs in "MODERN_REFERENCE_DATASET" and "UNKNOWN_SAMPLES" must exactly match the IDs in the tfam.*
 
-Hint: Check the ```pca_lsqpeoj.sh``` file if it is calling the following modules:
+Hint: Check the ```pca_lsqproj.sh``` file if it is calling the following modules:
 
 ```
 module load bioinfo-tools
@@ -450,10 +446,10 @@ module load python/2.7.11
 module load eigensoft/7.2.0
 ```
 
-Now make a ```tped``` version of the dataset and you can go ahead & submit a sbatch job:
+Now make a ```tped``` version of the FINAL_DATASET and you can go ahead & submit a sbatch job:
 
 ```
-sbatch -A correctUPPMAXproject -M snowy -p core -n 2 -t 07:00:00 -J PCA_lsq -e LSQ.er pca_lsqproj.sh FINAL_DATASET_PRUNED_TPED MODERN_SAMPLES.txt UNKNOWN_SAMPLES.txt
+sbatch -A correctUPPMAXproject -M snowy -p core -n 2 -t 07:00:00 -J PCA_lsq -e LSQ.er pca_lsqproj.sh FINAL_DATASET MODERN_SAMPLES.txt UNKNOWN_SAMPLES.txt
 ```
 This may take a few hours. You can check whether the job is still running with ```jobinfo```.
 
@@ -466,7 +462,7 @@ There are multiple ways of doing this, but if you can't think of a better one he
 ```
 library(ggplot2)
 
-pca<-read.table("FINAL_DATASET_PRUNED_TPED.popsubset.evec")
+pca<-read.table("FINAL_DATASET.popsubset.evec")
 ####### DIVIDE THE TABLE INTO MODERN & UNKNOWN - make sure to edit the right numbers! 
 
 modern<-pca[c(155:1610),]
@@ -573,7 +569,7 @@ This command executes the program with a seed set from system clock time, it giv
 
 For ADMIXTURE you also need to run many iterations at each K value, thus a compute cluster and some scripting is useful.
 
-Make a script from the code below to run Admixture for K = 2-6 with 4 iterations at each K value.
+Make a script from the code below to run Admixture for K = 2-6 with 4 iterations at each K value. Note that you are working with the ```FINAL_DATASET.bed`` file here (not the Tped)
 
 ```
 #!/bin/bash
@@ -586,7 +582,7 @@ for kval in {2..6}; do
 #working folder where admixture and the bed files are
 module load bioinfo-tools
 module load ADMIXTURE/1.3.0
-admixture -j3 -s $RANDOM /the/path/to/your/FINAL_DATASET_PRUNED.bed ${kval}
+admixture -j3 -s $RANDOM /the/path/to/your/FINAL_DATASET.bed ${kval}
 cd ../
 rm -r ${kval}.${int}
 #moves it to a different folder and renames it so you end up with multiple iterations
@@ -633,7 +629,7 @@ for i in {2..7};
 do
     for j in {1..3};
     do
-    echo -e "k${i}_r${j}\t${i}\t${i}.${j}/FINAL_DATASET_PRUNED.${i}.Q" >> unknown_FILEMAP.txt
+    echo -e "k${i}_r${j}\t${i}\t${i}.${j}/FINAL_DATASET.${i}.Q" >> unknown_FILEMAP.txt
     done
 done
 
@@ -641,24 +637,24 @@ done
 Example of what this file looks like, depending on how many K and how many iterations you run:
 
 ```
-k2_r1	2	2.1/FINAL_DATASET_PRUNED.2.Q
-k2_r2	2	2.2/FINAL_DATASET_PRUNED.2.Q
-k2_r3	2	2.3/FINAL_DATASET_PRUNED.2.Q
-k3_r1	3	3.1/FINAL_DATASET_PRUNED.3.Q
-k3_r2	3	3.2/FINAL_DATASET_PRUNED.3.Q
-k3_r3	3	3.3/FINAL_DATASET_PRUNED.3.Q
-k4_r1	4	4.1/FINAL_DATASET_PRUNED.4.Q
-k4_r2	4	4.2/FINAL_DATASET_PRUNED.4.Q
-k4_r3	4	4.3/FINAL_DATASET_PRUNED.4.Q
-k5_r1	5	5.1/FINAL_DATASET_PRUNED.5.Q
-k5_r2	5	5.2/FINAL_DATASET_PRUNED.5.Q
-k5_r3	5	5.3/FINAL_DATASET_PRUNED.5.Q
-k6_r1	6	6.1/FINAL_DATASET_PRUNED.6.Q
-k6_r2	6	6.2/FINAL_DATASET_PRUNED.6.Q
-k6_r3	6	6.3/FINAL_DATASET_PRUNED.6.Q
-k7_r1	7	7.1/FINAL_DATASET_PRUNED.7.Q
-k7_r2	7	7.2/FINAL_DATASET_PRUNED.7.Q
-k7_r3	7	7.3/FINAL_DATASET_PRUNED.7.Q
+k2_r1	2	2.1/FINAL_DATASET.2.Q
+k2_r2	2	2.2/FINAL_DATASET.2.Q
+k2_r3	2	2.3/FINAL_DATASET.2.Q
+k3_r1	3	3.1/FINAL_DATASET.3.Q
+k3_r2	3	3.2/FINAL_DATASET.3.Q
+k3_r3	3	3.3/FINAL_DATASET.3.Q
+k4_r1	4	4.1/FINAL_DATASET.4.Q
+k4_r2	4	4.2/FINAL_DATASET.4.Q
+k4_r3	4	4.3/FINAL_DATASET.4.Q
+k5_r1	5	5.1/FINAL_DATASET.5.Q
+k5_r2	5	5.2/FINAL_DATASET.5.Q
+k5_r3	5	5.3/FINAL_DATASET.5.Q
+k6_r1	6	6.1/FINAL_DATASET.6.Q
+k6_r2	6	6.2/FINAL_DATASET.6.Q
+k6_r3	6	6.3/FINAL_DATASET.6.Q
+k7_r1	7	7.1/FINAL_DATASET.7.Q
+k7_r2	7	7.2/FINAL_DATASET.7.Q
+k7_r3	7	7.3/FINAL_DATASET.7.Q
 ```
 
 The next file we need to create is the ***ind2pop*** file. It is just a list of which population each individual belongs to.
@@ -689,7 +685,7 @@ Netherlands_BA	Dutch
 ```
 An easy way of doing this is by :
 ```
-cut -f 1 -d " " FINAL_DATASET_PRUNED.fam | uniq > unknown_POPORDER_prep.txt
+cut -f 1 -d " " FINAL_DATASET.fam | uniq > unknown_POPORDER_prep.txt
 ```
 and then just use this simple script:
 ```
