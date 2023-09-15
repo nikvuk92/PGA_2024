@@ -322,7 +322,7 @@ you can run the script on the modern dataset (in an interactive node) like this:
 ```
 haploidize_tped.py < YOUR_DATASET_4.tped > YOUR_DATASET_4_haploid.tped
 ```
-It will take some time to run because it goes through each SNP position in your file. After it is done, the file YOUR_DATASET_4_haploid.tped is the haploid version of YOUR_DATASET_4.tped. Therefore you can either rename YOUR_DATASET_4.tped into something different (or if you are certain, just delete it) and rename the haploid version to just YOUR_DATASET_4.tped. This way, all the files that accompanied the original tped will work for your "new" version.
+As you can see, your file needs to be in .tped format. It will take some time to run because it goes through each SNP position in your file. After it is done, the file YOUR_DATASET_4_haploid.tped is the haploid version of YOUR_DATASET_4.tped. Therefore you can either rename YOUR_DATASET_4.tped into something different (or if you are certain, just delete it) and rename the haploid version to just YOUR_DATASET_4.tped. This way, all the files that accompanied the original tped will work for your "new" version.
 
 Now that you have made sure you have a haploid dataset, if you are curious you can obtain the observed and expected heterozygosities and look at the HWE stats by using this command 
 
