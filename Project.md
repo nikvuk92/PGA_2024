@@ -340,7 +340,7 @@ Plot a PCA using plink on the Modern reference individuals and describe what you
 
 The PCA analysis should give you an eigenvec and an eigenval file as outputs. Plot them in R and include this PCA in your report.
 Hmmm there is an outlier in the PCA that definitely doesn't seem to be making sense. Perhaps a mislabelled sample? Remove that one and re-run the PCA. (while it is not the best practice to just remove outliers you don't like, this is a controlled environment and removing the misplaced individual is part of the exercize :)) 
-Now re-plot the and it should look better! Also now plot the different PCs (as barplots) to show how much of the variation each one explains. Try to describe what each PC represents (up to some reasonable PC ex.PC5).
+Now re-plot the and hopefully it should look better! Also plot the different PCs (as barplots) to show how much of the variation each one explains. Try to describe what each PC represents (up to some reasonable PC ex.PC5).
 
 ## Step 7 Before merging let's first unify SNP names 
 When merging datasets from different chips, the same position can have different names on different chips. The rename_SNP.py script can be used on the .bim files to change the SNP name into the names based on position. Do this for both reference datasets and your unknown dataset. Check the bim files prior to making the change and see the SNP names before they get renamed.
