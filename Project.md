@@ -372,7 +372,7 @@ Again did the missigness change in any way? Let's call this one ```COMPLETE_DATA
 ### Filter missing genotypes 
 ``` --geno ``` filters out all variants with missing call rates exceeding some provided value. Using a value like the one below is a quick way of making our dataset lighter.
 ```
-plink --bfile COMPLETE_DATASET --geno 0.99 --make-bed --out COMPLETE_DATASET_GENO 
+plink --bfile COMPLETE_DATASET --geno 0.90 --make-bed --out COMPLETE_DATASET_GENO 
 ```
 Think about why the bulk of the filtering was done on the modern dataset and why we are very cautious now. 
 
