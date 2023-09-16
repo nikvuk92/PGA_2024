@@ -420,7 +420,7 @@ For running a projected PCA, you first need to produce some files:
   - a tped file (your final merged dataset); 
   - a list of the modern populations in the dataset;
   - a list of the unknown populations in the dataset;
-  - 
+
 To produce the tped, you can use plink as you've done so far. 
 
 And to produce the two population lists you can use a combination of awk, grep, sed, sort, uniq or whatever combination of those you choose.
