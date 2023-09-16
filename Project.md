@@ -420,6 +420,7 @@ For running a projected PCA, you first need to produce some files:
   - a tped file (your final merged dataset); 
   - a list of the modern populations in the dataset;
   - a list of the unknown populations in the dataset;
+  - 
 To produce the tped, you can use plink as you've done so far. 
 
 And to produce the two population lists you can use a combination of awk, grep, sed, sort, uniq or whatever combination of those you choose.
@@ -457,96 +458,64 @@ This may take a few hours. You can check whether the job is still running with `
 
 When it's done, assuming it has ended sucessfuly, copy the ```.evec``` and ```.eval``` files to your computer's R directory and plot the PCA.
 
-There are multiple ways of doing this, but if you can't think of a better one here's a suggestion:
+You will surely think of a better way to do this but in case you are stuck, below is an example that works. Make sure to edit the correct numbers and names in order to fit your data.
 
 ```
 library(ggplot2)
 
-pca<-read.table("FINAL_DATASET.popsubset.evec")
-####### DIVIDE THE TABLE INTO MODERN & UNKNOWN - make sure to edit the right numbers! 
+####### LSQ PROJECTION PCA PLOT 
+pca<-as.data.frame(EXAMPLE.popsubset.evec)
 
-modern<-pca[c(155:1610),]
+####### DIVIDE THE TABLE INTO MODERN & ANCIENT REFERENCE POPULATIONS - make sure to edit the right numbers! ########
+
+modern<-pca[c(1:100),]
 modern$V12<-factor(modern$V12)
-ancient<-pca[c(1:155),]
+modern$V2<-as.numeric(modern$V2)
+modern$V3<-as.numeric(modern$V3)
+ancient<-pca[c(100:200),]
 
-###### PLOTTING THE MODERN SAMPLES
-par(mfrow=c(1,1))
-layout(matrix(c(1,1), ncol=1), heights=c(1,2))
-par(mar=c(4,4,1,1))
-with(pca,plot(pca$V2~pca$V3,pch=20,cex=0.5,col = rgb(0, 0, 0, 0.15),xlab="PCA2",ylab="PCA1"))
+###### PLOTTING THE MODERN REFERENCE POPULATIONS
+plot(modern$V2,modern$V3,pch=20,cex=2.4,col = rgb(0, 0, 0, 0.15),xlab="PCA1",ylab="PCA2")
 
-###### LABELING THE PLOT CREATED WITH THE MODERN SAMPLES 
+###### LABELING THE PLOT CREATED WITH THE MODERN REFERENCE POPULATIONS
 
-mod_lab2<-aggregate(modern[,2:3],list(modern$V12),mean)
-for(j in 1:100) 
-{
-  text(mod_lab2$V3[j],mod_lab2$V2[j],labels=mod_lab2$Group.1[j],cex=0.7)   
+for(k in 1:length(unique(as.character(modern$V12)))){
+  text(y=mean(modern$V3[as.character(modern$V12)==unique(as.character(modern$V12))[k]]),x=mean(modern$V2[as.character(modern$V12)==unique(as.character(modern$V12))[k]]),
+       labels=unique(as.character(modern$V12))[k],cex=0.6,col="gray66")   
 }
 
-###### SPECIFYING THE UNKOWN SAMPLES - change the numbers accordingly based on the position in the final file! 
+###### SPECIFYING THE ANCIENT REFERENCE POPULATIONS - change the numbers accordingly based on the position in the final file!
 
-UNK1<-pca[c(1611),]
-UNK2<-pca[c(1612),]
-UNK3<-pca[c(1613),]
-UNK4<-pca[c(1614),]
-UNK5<-pca[c(1615),]
-UNK6<-pca[c(1616),]
-UNK7<-pca[c(1617),]
-UNK8<-pca[c(1618),]
-UNK9<-pca[c(1619),]
-UNK10<-pca[c(1620),]
-UNK11<-pca[c(1621),]
-UNK12<-pca[c(1622),]
-UNK13<-pca[c(1623),]
-UNK14<-pca[c(1624),]
-UNK15<-pca[c(1625),]
-UNK16<-pca[c(1626),]
+REF_POP_1<-pca[c(797:812),]
+REF_POP_2 <-pca[c(653:657),]
 
+###### SPECIFYING YOUR SAMPLES OF INTEREST
 
-###### PLOTTING THE UNKNOWN SAMPLES 
+UNK_SAMPLES<-pca[(900:925),]
 
-UNK1$V12<-factor(UNK1$V12)
-points(UNK1$V3,UNK1$V2,pch=17,cex=1.4,col="burlywood",bg="burlywood")
-for(k in 1:35) 
+###### PLOTTING THE ANCIENT REFERENCE POPULATIONS
+
+REF_POP_1$V12<-factor(REF_POP_1$V12)
+points(REF_POP_1$V2,REF_POP_1$V3,pch=15,cex=1,col="red",bg="red")
+
+REF_POP_2$V12<-factor(REF_POP_2$V12)
+points(REF_POP_2$V2,REF_POP_2$V3,pch=4,cex=1,col="orange",bg="orange")
+
+###### PLOTTING YOUR SAMPLES OF INTEREST ######
+
+UNK_SAMPLES$V12<-factor(UNK_SAMPLES$V12)
+points(UNK_SAMPLES$V2,UNK_SAMPLES$V3,pch=17,cex=1.4,col="skyblue",bg="skyblue")
+for(k in 1:25) 
   
 {
-  text(UNK1$V3[k],UNK1$V2[k],labels=UNK1$V12[k],pos=c(4),cex=0.9)   
+  text(UNK_SAMPLES$V2[k],UNK_SAMPLES$V3[k],labels=UNK_SAMPLES$V12[k],pos=c(4),cex=0.6)   
 }
 
-####################################2
-UNK2$V12<-factor(UNK2$V12)
-points(UNK2$V3,UNK2$V2,pch=3,cex=1.4,col="yellow3",bg="yellow3")
-for(k in 1:13) 
-  
-{
-  text(UNK2$V3[k],UNK2$V2[k],labels=UNK2$V12[k],pos=c(3),cex=0.9)   
-}
-
-####################################3
-UNK3$V12<-factor(UNK3$V12)
-points(UNK3$V3,UNK3$V2,pch=4,cex=1.4,col="yellow2",bg="yellow2")
-for(k in 1:13) 
-  
-{
-  text(UNK3$V3[k],UNK3$V2[k],labels=UNK3$V12[k],pos=c(3),cex=0.9)   
-}
-####################################4
-UNK4$V12<-factor(UNK4$V12)
-points(UNK4$V3,UNK4$V2,pch=5,cex=1.4,col="palevioletred3",bg="palevioletred3")
-for(k in 1:13) 
-  
-{
-  text(UNK4$V3[k],UNK4$V2[k],labels=UNK4$V12[k],pos=c(1),cex=0.9)   
-}
-
-SOME_REFERENCE_POPULATION<-pca[c(97:102),]
-#overlaying the ANCIENT REFERENCE samples
-SOME_REFERENCE_POPULATION$V12<-factor(SOME_REFERENCE_POPULATION$V12)
-points(SOME_REFERENCE_POPULATION$V3,SOME_REFERENCE_POPULATION$V2,pch=6,cex=1,col="green4")
+###### MAKE SURE TO CREATE A NICE LEGEND AS WELL!
 
 ```
-Most likely you can guess where this is going, so just use this as a reference and write the R script for the rest of your unknown individuals.
-After running it, you should get your nice projected PCA. Look at the output PDF, where are the unknown samples being projected? What clues does the PCA give you?
+The example was for two reference populations but do plot all the reference populations you think are relevant to your dataset. The more the merrier!
+After running this in R, you should get your nice projected PCA (what are we projecting anyways?). What clues does this PCA give you?
 
 ## Step 4 ADMIXTURE 
 
@@ -652,9 +621,7 @@ k5_r3	5	5.3/FINAL_DATASET.5.Q
 k6_r1	6	6.1/FINAL_DATASET.6.Q
 k6_r2	6	6.2/FINAL_DATASET.6.Q
 k6_r3	6	6.3/FINAL_DATASET.6.Q
-k7_r1	7	7.1/FINAL_DATASET.7.Q
-k7_r2	7	7.2/FINAL_DATASET.7.Q
-k7_r3	7	7.3/FINAL_DATASET.7.Q
+
 ```
 
 The next file we need to create is the ***ind2pop*** file. It is just a list of which population each individual belongs to.
@@ -667,7 +634,7 @@ cut -f 1 -d " " FINAL_DATASET_PRUNED.fam > unknown_IND2POP.txt
 The ind2pop file should look exactly like the first column of the fam.
 
 The ***poporder*** file is a key between what your populations are called and what "Proper" name you want to show up in your final plot. 
-Also as the name suggests, **gives the order in which you want the populations to be in**, so order them as you think it makes most sense.
+Also as the name suggests, **gives the order in which you want the populations to be in**, so order them as you think it makes most sense. For example if you want to show the transition between the Neolithic and the Mesolithic, you could plot all the Neolithic populations next to each other, followed by all the Mesolithic ones, or you could choose geography, or whatever you like.
 
 *Note that the file needs to be **tab-delimited**, i.e separated by tabs (If you have spaces issues may occure). 
 Also, make sure within the names in this file to not have any spaces. If you do, try replacing them with underscores (_).*
