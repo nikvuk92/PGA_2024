@@ -25,7 +25,7 @@ In order to achieve this, you are provided with a two reference datasets that sh
 /crex/proj/uppmax2023-2-38/ANCIENT_REFERENCE_DATASET
 /crex/proj/uppmax2023-2-38/MODERN_REFERENCE_DATASET
 ```
-Helpful scripts are there to aid you on your quest can be found:
+Helpful scripts are there to aid you on your quest and can be found:
 ```
 /crex/proj/uppmax2023-2-38/SCRIPTS
 ```
