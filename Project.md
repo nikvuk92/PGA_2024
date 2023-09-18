@@ -408,9 +408,17 @@ plink --bfile COMPLETE_DATASET_GENO --extract plink.prune.in --make-bed --out FI
 ```
 Check how much you're pruning out. Perhaps you can tweak the parameters if you are pruning out too much! 
 
-## Step 2 Projected PCA
+## Step 2 Plink PCA
 
-There is a reason why we are doing a projected PCA instead of a "conventional" PCA. It would be good to think about why we have decided to do this step. Maybe read up a bit on what it is and what it does.
+Quickly run a conventional PCA on your FINAL_DATASET using plink and try to visualize it. This is just for comparison purposes, so don't dwell on it for too long.
+(you need the bed version of your FINAL_DATASET to run this)
+
+``` plink --bfile FINAL_DATASET --pca
+```
+
+## Step 3 Projected PCA
+
+There is a reason why we are favouring a projected PCA instead of a "conventional" PCA. It would be good to think about why we have decided to do this step. Maybe read up a bit on what it is and what it does.
 But it is surely something to do with the specific nature of the samples we are dealing with.
 
 For running a projected PCA, you first need to produce some files:
@@ -515,7 +523,7 @@ for(k in 1:25)
 The example was for two reference populations but do plot all the reference populations you think are relevant to your dataset. The more the merrier!
 After running this in R, you should get your nice projected PCA (what are we projecting anyways?). What clues does this PCA give you?
 
-## Step 4 ADMIXTURE 
+## Step 5 ADMIXTURE 
 
 ADMIXTURE is a similar tool to STRUCTURE but runs much quicker, especially on large datasets.
 ADMIXTURE runs directly from .bed or .ped files and needs no extra parameters for file preparation. You do not specify burin and repeats, ADMIXTURE exits when it converged on a solution (Delta< minimum value)
@@ -569,7 +577,7 @@ In each one of them you will find the output ```P``` and ```Q``` for each iterat
 
 *If you decide to work on PONG locally, you need to edit each ```Q``` file by adding the right k & iteration number to each one. After doing this for all folders, you can move all the ```Q``` files to a directory of your liking.*
 
-## Step 5 PONG 
+## Step 6 PONG (Visualizing step 5)
 
 When the admixture analysis is finally done we use PONG to combine the different iterations and visualize our results. 
 
