@@ -131,15 +131,22 @@ PLINK is a software for fast and efficient filtering, merging, editing of large 
 
 ### Running the program:
 
-If working on Rackham type in the following:
+If working on Rackham load the following modules by typing in:
 ```
 module load bioinfo-tools
-module load plink/1.90b4.9 
+module load plink/1.90b4.9
+module load python/2.7.11
+module load pong
+module load KING
 
 ```
-The software is already pre-installed on Rackham, you just have to load it
+The software is already pre-installed on Rackham, you just have to load it. 
+Heads up - every time you close your terminal, you will need to re-load the modules. If something is not working, a good sanity check is to see which modules are loaded :
+```
+module list
+```
 
-Try it:
+Okay, let's try running plink:
 ```
 plink
 ```
