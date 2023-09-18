@@ -34,7 +34,7 @@ In the steps that will lead you towards unmasking the unknown populations you wi
 1. Take a look at both Reference populations to get a feel of what you are working with. Check the genotyping rate of both; 
 2. Check for related individuals in your **modern reference dataset**;
 3. Filter the related individuals (if there are any) from the **reference dataset** - *we have nothing against family, but individuals that are in close kinship will affect our downstream analysis and we don't want that*;
-4. Filter the **modern reference** individuals & SNPs (missingness, HWE, MAF) - *word of caution: do not apply the 'maf' filtering until you have your final references dataset!*;
+4. Filter the **modern reference** individuals & SNPs
    *Remember: The **unknown** samples **do not** go through any filtering!*
 5. Run a PCA on the **modern reference** dataset only to get an understanding of the populations that will build the principle components;
 6. In case there is something odd with the way your PCA looks like, think about how you can solve it.
