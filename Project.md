@@ -29,8 +29,6 @@ Helpful scripts are there to aid you on your quest and can be found:
 ```
 /crex/proj/uppmax2023-2-38/SCRIPTS
 ```
-The setup of this The unknown samples are a mysterious bunch. They look different from the rest don't they? (*hint - check the genotyping rate - i.e. missingness*).
-
 In the steps that will lead you towards unmasking the unknown populations you will need to: 
 
 1. Take a look at both Reference populations to get a feel of what you are working with. Check the genotyping rate of both; 
