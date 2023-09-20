@@ -187,7 +187,7 @@ cp /full_path_to_course_material/unk1.bed .
 cp /full_path_to_course_material/unk1.bim .
 cp /full_path_to_course_material/unk1.fam .
 ```
-
+Also make sure to copy **all the scripts** over from the SCRIPTS folder into your directory.
 **The files above contain SNPs from a number of unknown individuals in bed file format**
  
 Look at the `.bim` (markers) and `.fam` (sample info) files by typing:
