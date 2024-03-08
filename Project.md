@@ -420,7 +420,10 @@ Check how much you're pruning out. Perhaps you can tweak the parameters if you a
 Quickly run a conventional PCA on your FINAL_DATASET using plink and try to visualize it. This is just for comparison purposes, so don't dwell on it for too long.
 (you need the bed version of your FINAL_DATASET to run this)
 
-``` plink --bfile FINAL_DATASET --pca
+```
+
+plink --bfile FINAL_DATASET --pca --out FINAL_DATASET_PCA
+
 ```
 
 ## Step 3 Projected PCA
