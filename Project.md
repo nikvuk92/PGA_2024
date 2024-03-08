@@ -377,7 +377,7 @@ Again did the missigness change in any way? Let's call this one ```COMPLETE_DATA
 ### Filter missing genotypes 
 ``` --geno ``` filters out all variants with missing call rates exceeding some provided value. Using a value like the one below is a quick way of making our dataset lighter.
 ```
-plink --bfile COMPLETE_DATASET --geno 0.90 --make-bed --out COMPLETE_DATASET_GENO 
+plink --bfile COMPLETE_DATASET --geno 0.99 --make-bed --out COMPLETE_DATASET_GENO 
 ```
 Think about why the bulk of the filtering was done on the modern dataset and why we are very cautious now. 
 
@@ -577,7 +577,7 @@ done
 You will need to **replace the project name** and the **path** to your pruned .bed-file in the script then just run it:
 
 ```
-bash NAME_OF_THE_SCRIPT.sh
+sbatch -A YOURPROJECTNAME -M snowy -p core -n 4 -t 1-00:00:00 the_admixture_script_you_just_created.sh
 ```
 After a successful Admixture run, you should be seeing a bunch of new folders being created. 
 In each one of them you will find the output ```P``` and ```Q``` for each iteration. 
