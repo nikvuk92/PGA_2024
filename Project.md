@@ -310,7 +310,7 @@ The script for KING is as follows:
 #SBATCH -A uppmax20XX-XX-XX
 #SBATCH -n 8
 module load bioinfo-tools KING
-king -b $1  --unrelated
+king -b $1  --related
 ```
 You can submit it as a job by doing:
 ```
