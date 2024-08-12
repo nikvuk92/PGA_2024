@@ -401,7 +401,12 @@ Furthermore, make sure to doublecheck your script before running it. 90% of issu
 
 Before running PCA & ADMIXTURE it is advisable to prune the data to thin the marker set for linkage disequilibrium.
 You can read up on how to prune for LD(https://dalexander.github.io/admixture/admixture-manual.pdf).
+For example, ```--indep-pairwise 50 10 0.5``` :
+- Window Size (50): This means PLINK will examine LD between SNPs within a sliding window of 50 SNPs. A smaller window size would prune less aggressively, but a window of 50 SNPs is generally considered a good balance between capturing local LD and not being too strict.
+- Step Size (10): The window will slide across the genome in steps of 10 SNPs. This step size allows for a reasonable balance between computational efficiency and thoroughness in detecting SNP pairs in high LD.
+- r² Threshold (0.5): SNP pairs with an r² greater than 0.5 within the window will have one SNP removed. An r² of 0.5 is a moderate threshold that ensures SNPs in very high LD (strongly correlated) are pruned, while keeping more SNPs that are only moderately correlated.
 
+You can try the following:
 ```
 plink --bfile COMPLETE_DATASET_GENO --indep-pairwise 10 10 0.5
 ```
