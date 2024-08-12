@@ -400,7 +400,19 @@ Furthermore, make sure to doublecheck your script before running it. 90% of issu
 ## Step 1 LD Pruning 
 
 Before running PCA & ADMIXTURE it is advisable to prune the data to thin the marker set for linkage disequilibrium.
+
+Why LD Pruning is Important:
+- Reducing Redundancy:
+Linked SNPs: SNPs that are in linkage disequilibrium (LD) are not independent of each other, meaning that their allele frequencies are correlated due to physical proximity on the chromosome.
+Pruning: By removing SNPs in high LD, you reduce redundancy in your dataset, which helps ensure that the remaining SNPs are more independent.
+- Improving Statistical Power:
+PCA and ADMIXTURE: Analyses like Principal Component Analysis (PCA) and ADMIXTURE can be skewed by linked SNPs because these methods assume independence between markers. LD pruning helps avoid bias and overestimation of population structure or admixture components.
+Avoiding Overfitting: Pruning helps prevent overfitting in models by removing highly correlated variables (SNPs).
+- Computational Efficiency:
+Smaller Dataset: Pruning reduces the number of SNPs, making the dataset smaller and more manageable. This can lead to faster computation times and reduced memory usage, especially in computationally intensive analyses.
+
 You can read up on how to prune for LD(https://dalexander.github.io/admixture/admixture-manual.pdf).
+
 For example, ```--indep-pairwise 50 10 0.5``` :
 - Window Size (50): This means PLINK will examine LD between SNPs within a sliding window of 50 SNPs. A smaller window size would prune less aggressively, but a window of 50 SNPs is generally considered a good balance between capturing local LD and not being too strict.
 - Step Size (10): The window will slide across the genome in steps of 10 SNPs. This step size allows for a reasonable balance between computational efficiency and thoroughness in detecting SNP pairs in high LD.
