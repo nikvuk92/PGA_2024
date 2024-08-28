@@ -1,4 +1,4 @@
-# PGA Course Autumn 2023
+# PGA Course Autumn 2024
 
 ## Instructions for project work
 
