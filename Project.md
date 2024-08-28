@@ -22,8 +22,8 @@ The setup of this project is very similar to what you would do as a researcher i
 Therefore, it is up to you to identify the populations you have received and aided by literature on the subject as well as some historical context, try to infer possible demographic events. 
 In order to achieve this, you are provided with a two reference datasets that should come in handy as a way to compare the unknown samples to the known ones. 
 ```
-/crex/proj/uppmax2023-2-38/ANCIENT_REFERENCE_DATASET
-/crex/proj/uppmax2023-2-38/MODERN_REFERENCE_DATASET
+/crex/proj/uppmax2023-2-38/ANCIENT_REFERENCE_DATASET <<<<<<<<Old uppmax project
+/crex/proj/uppmax2023-2-38/MODERN_REFERENCE_DATASET <<<<<<<<Old uppmax project
 ```
 Helpful scripts are there to aid you on your quest and can be found:
 ```
