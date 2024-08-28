@@ -13,7 +13,7 @@ The structure of the project work will be organized as follows:
 - we will create a slack group in which you will be able to ask specific questions during the project duration;
 - we can also set up group meeting times over zoom;
 - the end product should be a Scientific report of ~10 pages, including Abstract, Introduction, Materials & Methods, Results, Discussion, References, Appendices (length is not crucial here, substance is);
-- A short presentation (16-17 October);
+- A short presentation (tbd);
 - the deadline for the written report is the day of the presentation.
 
 ## Unmasking the mystery of your 25 samples
