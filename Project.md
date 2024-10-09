@@ -40,7 +40,7 @@ In the steps that will lead you towards unmasking the unknown populations you wi
 6. In case there is something odd with the way your PCA looks like, think about how you can solve it.
 7. After bringing the **modern reference** panel into shape merge the two reference datasets to each other;
 6. Unify SNP names across your dataset - change the SNP name into the names based on position. This is needed when merging datasets from different SNP chips (the same position can have different names on different chips);
-7. After merging together your reference dataset - merge it together with your **unknown** data;
+7. After merging together your reference dataset - merge it together with your **unknown** data (This depends on the group you got -  TAPAS/CARBONARA/FISHNCHIPS/FIKABROD);
 8. Before running PCA/Admixture you need to prune your data for SNPs in LD (pruning is explained in the admixture manual https://dalexander.github.io/admixture/admixture-manual.pdf);
 9. Try to run a normal PCA on this dataset - can you explain why you think this is/isn't a good idea?;
 10. Run a projected PCA;
