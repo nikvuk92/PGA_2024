@@ -323,7 +323,7 @@ Checkpoint *At this point, if you exclude any related individuals you should be 
 ## Step 5 Make the modern dataset haploid 
 "Pseudohaploidizing" a TPED file typically involves converting a diploid genotype data file into a pseudohaploid format, where each variant or SNP (Single Nucleotide Polymorphism) is represented only once, as if the genotype data came from a haploid individual. This is mainly employed when working with ancient DNA. The script that we are using selects one allele for each SNP marker for each individual. There are multiple ways for the allele selection process but it must be consistent across the dataset. Can you think about why this is a good idea to do when dealing with ancient DNA? 
 
-First, make the script executable, ```chmod +x haploidize_tped.py```
+There is no need to edit the script but we should make it script executable: ```chmod +x haploidize_tped.py```
 
 and then you can run the script on the modern dataset (in an interactive node) as shown below. You need to load ```python/2.7.11``` as module first:
 ```
