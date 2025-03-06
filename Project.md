@@ -54,7 +54,7 @@ CARBONARA [Pritchard 2019](https://www.science.org/doi/10.1126/science.aay6826)
 - First describe what you see when you plot the modern populations. Can you say anything about this initial PCA?
 - Using the techniques explained below, make your best guess on the makeup of each unknown sample. Some will be easy and for others it will be more difficult.
 - After reading the papers, together with your findings and discussion with the TA you should be able to give some context to your populations and present your findings.
-14. Don't panic - there's plenty of time. 
+14. Don't panic - there's plenty of time. Good luck!
 
 ## Some technicalities
 
