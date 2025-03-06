@@ -362,7 +362,7 @@ After which you should get that the output with replaced SNP names has been writ
 
 Now check what the bim files look like after the changes.
 
-### Step 8 Merging the reference datasets to eachother
+## Step 8 Merging the reference datasets to eachother (Ancient and Modern)
 
 *P.S. As long as you have all the files/datasets in the same directory you don't need to specify the full paths. If they are in different datasets, remember to add the full path to the file, such as:
 ```/proj/uppmaxproject/full_path_to_YOUR_OWN_directory/Reference_datasets/datasetA/file```
@@ -372,7 +372,7 @@ Now check what the bim files look like after the changes.
 Merging is done using plink's bmerge command:
 ```plink --bmerge FILE_A --bfile FILE_B --out FILEA+B```
 
-### Step 9 Merge the Unknown dataset to the reference-combined-dataset
+## Step 9 Merge the Unknown dataset to the reference-combined-dataset
 Finally, after you've merged the two reference datasets together, we need to merge in the Unknowns as well. To do this, as previously, 
 Again did the missigness change in any way? Let's call this one ```COMPLETE_DATASET```.
 
