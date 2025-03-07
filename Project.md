@@ -316,7 +316,7 @@ You can submit it as a job by doing:
 ```
 sbatch -M snowy THIS_SCRIPT.sh YOUR_DATASET4.bed
 ```
-Look at the output from KING & **keep** the unrelated individuals.
+Look at the output from KING & **keep** the unrelated individuals. After that, convert it into a ```.tped``` format.
 
 Checkpoint *At this point, if you exclude any related individuals you should be at YOUR_DATASET_5, otherwise go on with YOUR_DATASET_4*
 
@@ -330,6 +330,8 @@ and then you can run the script on the modern dataset (in an interactive node) a
 ./haploidize_tped.py < YOUR_DATASET_4.tped > YOUR_DATASET_4_haploid.tped
 ```
 As you can see, your file needs to be in .tped format. It will take some time to run because it goes through each SNP position in your file. After it is done, the file YOUR_DATASET_4_haploid.tped is the haploid version of YOUR_DATASET_4.tped. Therefore you can either rename YOUR_DATASET_4.tped into something different (or if you are certain, just delete it) and **rename** the haploid version to just YOUR_DATASET_4.tped. This way, all the files that accompanied the original tped will work for your "new" version.
+
+**Important! Do not delete YOUR_DATASET_4.tfam.**
 
 Now that you have made sure you have a haploid dataset, if you are curious you can obtain the observed and expected heterozygosities and look at the HWE stats by using this command 
 
